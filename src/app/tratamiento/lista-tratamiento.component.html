@@ -1,0 +1,56 @@
+<div class="container">
+  <mat-toolbar>
+      <span>Agenda Tratamientos</span>
+      <div class="example-spacer"></div>
+      <button mat-raised-button color="primary" (click)="onAdd()">Nuevo Tratamiento</button>
+  </mat-toolbar>
+
+  <div *ngIf="data.length >= 0">
+    <mat-form-field appearance="standard">
+      <mat-label>Filtro</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Nombre/Precio etc" #input autocomplete="off">
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+
+        <ng-container matColumnDef="id_tratamiento">
+          <th mat-header-cell *matHeaderCellDef> idTratamiento </th>
+          <td mat-cell *matCellDef="let element"> {{element.id_tratamiento}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
+          <td mat-cell *matCellDef="let element"> {{element.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="descripcion">
+          <th mat-header-cell *matHeaderCellDef  mat-sort-header> Descripcion </th>
+          <td mat-cell *matCellDef="let element"> {{element.descripcion}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="precio">
+          <th mat-header-cell *matHeaderCellDef> Precio </th>
+          <td mat-cell *matCellDef="let element">{{element.precio | currency}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef> Editar/Eliminar </th>
+          <td mat-cell *matCellDef="let row" style="text-align: left;">
+            <button mat-icon-button matTooltip="Modificar el tratamiento" (click)="onEdit(row)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" matTooltip="Eliminar el tratamiento" (click)="onDelete(row.id_tratamiento)">
+              <mat-icon>delete_outline</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+      </table>
+      <mat-paginator [length]="resultsLength" [pageSize]="10" aria-label="Select page of users"></mat-paginator>
+    </div>
+  </div>
+
+  <h2 *ngIf="data.length !< 0">No hay Tratamientos para mostrar</h2>
+</div>

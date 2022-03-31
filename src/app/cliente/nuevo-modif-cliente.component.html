@@ -1,0 +1,53 @@
+<mat-toolbar>
+  <span>{{nombreComponente}}</span>
+  <div class="example-spacer"></div>
+</mat-toolbar>
+<div>
+  <p></p>
+  <form (ngSubmit)="onCreate()">
+    <mat-grid-list cols="2">
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Nombre</mat-label>
+        <input matInput required="nombre" type="text" [(ngModel)]="cliente.nombre" name="nombre" placeholder="Nombre" autocomplete="off" />
+      </mat-form-field>
+      <p></p>
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Apellido</mat-label>
+        <input matInput required="apellido" [(ngModel)]="cliente.apellido" name="apellido" placeholder="Apellido" autocomplete="off"/>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Celular</mat-label>
+        <input matInput type="number" [(ngModel)]="cliente.celular" name="celular" placeholder="Celular" autocomplete="off"/>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Email</mat-label>
+        <input matInput [formControl]="email" [(ngModel)]="cliente.email" name="email" placeholder="Email" autocomplete="off"/>
+        <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field appearance="legacy" class="ancho">
+        <mat-label *ngIf="cliente.localidad.nombre">{{cliente.localidad.nombre}}</mat-label>
+        <mat-select required="localidad" id="localidad" name="localidad" placeholder="Seleccione una Localidad" [(ngModel)]="cliente.localidad.id_localidad">
+          <mat-option *ngFor="let localidad of localidades" [value]="localidad.id_localidad">
+            {{localidad.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field appearance="legacy" class="ancho">
+        <mat-label *ngIf="cliente.localidad.provincia.nombre">{{cliente.localidad.provincia.nombre}}</mat-label>
+        <mat-select required="provincia" [(ngModel)]="cliente.localidad.provincia.id_provincia" placeholder="Seleccione una Provincia" id="provincia" name="provincia" (selectionChange)="cargarLocalidadPorProvinciaId($event)">
+          <mat-option *ngFor="let provincia of provincias" [value]="provincia.id_provincia">
+            {{provincia.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-list>
+    <div mat-dialog-actions [align]="'end'">
+      <button mat-raised-button color="warn" style="margin-left: 8px; height: 50px;" mat-dialog-close>Close</button>
+      <button type="submit" style="margin-left: 8px; height: 50px;" mat-raised-button color="primary" >Guardar</button>
+    </div>
+  </form>
+</div>
