@@ -1,0 +1,57 @@
+<div class="body">
+  <mat-spinner *ngIf="loading" class="spinner" diameter="50"></mat-spinner>
+  <mat-card *ngIf="!loading"  class="example-card">
+    <mat-tab-group>
+      <mat-tab label="Iniciar Sesion">
+        <form [formGroup]="loginForm" class="login" (ngSubmit)="ingresar()">
+          <mat-grid-list cols="1">
+            <br>
+            <p></p>
+            <mat-form-field class="ancho" appearance="fill">
+              <mat-label>Correo Electronico</mat-label>
+              <input matInput autocomplete="off" formControlName="email">
+            </mat-form-field>
+            <p></p>
+            <mat-form-field class="ancho" appearance="fill">
+              <mat-label>Contraseña</mat-label>
+              <input matInput autocomplete="off" formControlName="password" type="password">
+            </mat-form-field>
+            <p></p>
+            <button class="login ancho" type="submit" mat-raised-button mat-button color="primary" [disabled]="loginForm.invalid">Iniciar Sesion</button>
+          </mat-grid-list>
+        </form>
+      </mat-tab>
+      <mat-tab label="Nuevo Usuario">
+        <form [formGroup]="createForm" class="login" (ngSubmit)="crearUsuario()">
+          <mat-grid-list cols="1">
+            <br>
+            <p></p>
+            <mat-form-field class="ancho" appearance="fill">
+              <mat-label>Nombre Usuario</mat-label >
+              <input matInput autocomplete="off" formControlName="nombreUsuario">
+            </mat-form-field>
+            <p></p>
+            <mat-form-field class="ancho" appearance="fill">
+              <mat-label>Nombre</mat-label >
+              <input matInput autocomplete="off" formControlName="nombre">
+            </mat-form-field>
+            <p></p>
+            <mat-form-field class="ancho" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput autocomplete="off" formControlName="email">
+            </mat-form-field>
+            <p></p>
+            <mat-form-field class="ancho" appearance="fill">
+              <mat-label>Contraseña</mat-label>
+              <input matInput autocomplete="off" formControlName="password" type="password">
+            </mat-form-field>
+            <p></p>
+            <button class="login ancho" type="submit" mat-raised-button mat-button color="primary" [disabled]="createForm.invalid">Registrar</button>
+          </mat-grid-list>
+        </form>
+      </mat-tab>
+    </mat-tab-group>
+
+  </mat-card>
+</div>
+

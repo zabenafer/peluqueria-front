@@ -1,0 +1,24 @@
+
+.body {
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  background-color: rgba(151, 151, 151, 0.336);
+}
+
+.login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ancho
+ {
+   height: 100%;
+   width: 100%;
+ }
+
+ .spinner {
+   margin: 0 auto;
+ }

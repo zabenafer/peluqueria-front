@@ -21,6 +21,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -42,7 +46,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDatepickerModule,
     MatSortModule,
     MatTooltipModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatTabsModule,
+    MatMomentDateModule,
+    MatProgressSpinnerModule
   ],
   exports: [
     CommonModule,
@@ -61,7 +69,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatDatepickerModule,
     MatSortModule,
     MatTooltipModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule,
+    MatTabsModule,
+    MatMomentDateModule,
+    MatProgressSpinnerModule
   ]
 })
 export class SharedModule { }

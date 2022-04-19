@@ -1,18 +1,13 @@
-import { ListaTurnosComponent } from './turno/lista-turnos.component';
-import { ListaTratamientoComponent } from './tratamiento/lista-tratamiento.component';
-import { ContactoComponent } from './contacto/contacto.component';
-import { ListaClienteComponent } from './cliente/lista-cliente.component';
+import { LoginComponent } from './components/login/login.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HistorialTurnosComponent } from './turno/historial-turnos.component';
+import { HomeGuard } from './components/guards/home.guard';
 
 const routes: Routes = [
-  {path: '', component: ListaClienteComponent},
-  {path: 'clientes', component: ListaClienteComponent},
-  {path: 'tratamientos', component: ListaTratamientoComponent},
-  {path: 'turnos', component: ListaTurnosComponent},
-  {path: 'verhistorial/:id', component: HistorialTurnosComponent},
-  {path: 'contacto', component: ContactoComponent},
+  {path: '', component: LoginComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'dashboard',canActivate: [HomeGuard], loadChildren: () => import('./components/dashboard/dashboard.module').then(x => x.DashboardModule)},
+  // {path: 'verhistorial/:id', component: HistorialTurnosComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 
