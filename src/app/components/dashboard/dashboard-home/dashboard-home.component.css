@@ -1,0 +1,28 @@
+.section {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  line-height: 25px;
+}
+
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.content {
+  padding: 16px;
+}
+
+
+a:link, a:visited,  a:hover, a:active
+{
+    color: #000000;
+    text-decoration: none;
+}
+
+.mat-toolbar {
+  background-color: #ebe9f1;
+}
+

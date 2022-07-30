@@ -3,6 +3,10 @@ table {
   margin-top: 10px;
 }
 
+mat-toolbar {
+  background-color: rgb(238, 237, 237)
+}
+
 tr.example-detail-row {
   height: 0;
 }
@@ -54,4 +58,8 @@ th {
 .mat-form-field {
   font-size: 14px;
   width: 20%;
+}
+
+tr.mat-footer-row {
+  font-weight: bold;
 }

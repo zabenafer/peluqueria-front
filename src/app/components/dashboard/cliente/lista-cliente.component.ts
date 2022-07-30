@@ -28,7 +28,7 @@ export class ListaClienteComponent implements OnInit {
      private toastr: ToastrService,
      private router: Router) { }
 
-  public displayedColumns: any[] = ['id_cliente','nombre', 'apellido', 'celular', 'email', 'localidad.nombre', 'localidad.provincia.nombre','historial', 'acciones'];
+  public displayedColumns: any[] = ['nombre', 'apellido', 'celular', 'email', 'localidad.nombre', 'localidad.provincia.nombre','historial', 'acciones'];
   public dataSource = new MatTableDataSource<Cliente>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

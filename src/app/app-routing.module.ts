@@ -7,7 +7,6 @@ const routes: Routes = [
   {path: '', component: LoginComponent},
   {path: 'login', component: LoginComponent},
   {path: 'dashboard',canActivate: [HomeGuard], loadChildren: () => import('./components/dashboard/dashboard.module').then(x => x.DashboardModule)},
-  // {path: 'verhistorial/:id', component: HistorialTurnosComponent},
   {path: '**', redirectTo: '', pathMatch: 'full'}
 ];
 

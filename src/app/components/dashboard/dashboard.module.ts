@@ -14,20 +14,32 @@ import { ListaTurnosComponent } from './turno/lista-turnos.component';
 import { NuevoModifTurnoComponent } from './turno/nuevo-modif-turno.component';
 import { NuevoModifTratamientoComponent } from './tratamiento/nuevo-modif-tratamiento.component';
 import { ListaTratamientoComponent } from './tratamiento/lista-tratamiento.component';
+import { ListaProductoComponent } from './producto/lista-producto.component';
+import { NuevoModifProductoComponent } from './producto/nuevo-modif-producto.component';
+import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
+import { ListaVentaComponent } from './venta/lista-venta.component';
+import { NuevoModifVentaComponent } from './venta/nuevo-modif-venta.component';
+import { DetalleVentaComponent } from './venta/detalle-venta.component';
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    ListaClienteComponent,
-    NuevoModifClienteComponent,
     MenusidevarComponent,
-    ContactoComponent,
-    HistorialTurnosComponent,
+    ListaClienteComponent,
     ListaTurnosComponent,
+    ListaTratamientoComponent,
+    ListaProductoComponent,
     NuevoModifTurnoComponent,
+    NuevoModifClienteComponent,
     NuevoModifTratamientoComponent,
-    ListaTratamientoComponent
+    NuevoModifProductoComponent,
+    HistorialTurnosComponent,
+    ContactoComponent,
+    DashboardHomeComponent,
+    ListaVentaComponent,
+    NuevoModifVentaComponent,
+    DetalleVentaComponent
 
   ],
   imports: [

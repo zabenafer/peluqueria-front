@@ -29,7 +29,7 @@ export class HistorialTurnosComponent implements OnInit {
     private toastr: ToastrService,
     private router: ActivatedRoute) { }
 
-  public displayedColumns: any[] = ['fechaTurno','cliente.nombre', 'cliente.apellido', 'tratamiento.nombre', 'turno.descripcion', 'precio','acciones'];
+  public displayedColumns: any[] = ['fechaTurno', 'tratamiento.nombre', 'turno.descripcion', 'precio', 'acciones'];
   public dataSource = new MatTableDataSource<Turno>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

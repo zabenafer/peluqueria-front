@@ -25,6 +25,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRippleModule } from '@angular/material/core';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatCardModule,
     MatTabsModule,
     MatMomentDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    FlexLayoutModule
   ],
   exports: [
     CommonModule,
@@ -73,7 +77,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatCardModule,
     MatTabsModule,
     MatMomentDateModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatRippleModule,
+    FlexLayoutModule
   ]
 })
 export class SharedModule { }

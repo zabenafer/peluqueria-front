@@ -1,3 +1,4 @@
+import { Tratamiento } from './../models/tratamiento';
 import { NuevoModifTratamientoComponent } from './nuevo-modif-tratamiento.component';
 import { MatSort } from '@angular/material/sort';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -6,7 +7,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Tratamiento } from '../models/tratamiento';
 import { TratamientoService } from '../service/tratamiento.service';
 
 @Component({
@@ -62,7 +62,7 @@ export class ListaTratamientoComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '40%';
+    dialogConfig.width = '30%';
     dialogConfig.data = tratamient;
     this.dialog.open(NuevoModifTratamientoComponent, dialogConfig);
   }
@@ -92,6 +92,10 @@ export class ListaTratamientoComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  getTotalCost() {
+    return this.dataSource.data.map(t => t.precio).reduce((acc, value) => acc + value, 0);
   }
 
 }

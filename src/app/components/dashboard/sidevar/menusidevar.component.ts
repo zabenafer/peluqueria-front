@@ -12,14 +12,14 @@ import {ChangeDetectorRef, Component, OnDestroy} from '@angular/core';
 export class MenusidevarComponent implements OnDestroy {
 
   mobileQuery: MediaQueryList;
-
   //fillerNav = Array.from({length: 50}, (_, i) => `Nav Item ${i + 1}`);
   fillerNav=[
-    {name:'Home', route:'*',icon:'home'},
-    {name:'Clientas', route:'clientes',icon:'people'},
+    {name:'Home', route:'dashboard-home',icon:'home'},
+    {name:'Clientes', route:'clientes',icon:'people'},
     {name:'Tratamientos', route:'tratamientos',icon:'list'},
     {name:'Turnos', route:'turnos',icon:'edit_calendar'},
-    {name:'Contacto', route:'contacto',icon:'perm_contact_calendar'},
+    {name:'Productos', route:'productos',icon:'storage'},
+    {name:'Ventas', route:'ventas',icon:'receipt_long'},
     {name:'Cerrar Sesion',icon:'logout'}
   ]
 

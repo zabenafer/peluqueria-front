@@ -5,15 +5,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { HistorialTurnosComponent } from './turno/historial-turnos.component';
 import { ListaTratamientoComponent } from './tratamiento/lista-tratamiento.component';
 import { ListaTurnosComponent } from './turno/lista-turnos.component';
-import { ContactoComponent } from './contacto/contacto.component';
+import { ListaProductoComponent } from './producto/lista-producto.component';
+import { DashboardHomeComponent } from './dashboard-home/dashboard-home.component';
+import { ListaVentaComponent } from './venta/lista-venta.component';
+import { DetalleVentaComponent } from './venta/detalle-venta.component';
 
 const routes: Routes = [
   {path: '', component: DashboardComponent, children: [
     { path: 'clientes', component: ListaClienteComponent },
     { path: 'tratamientos', component: ListaTratamientoComponent },
     { path: 'turnos', component: ListaTurnosComponent },
-    { path: 'contacto', component: ContactoComponent },
+    { path: 'productos', component: ListaProductoComponent },
+    { path: 'ventas', component: ListaVentaComponent },
     { path: 'verhistorial/:id', component: HistorialTurnosComponent},
+    { path: 'verdetalleventa/:id', component: DetalleVentaComponent},
+    { path: 'dashboard-home', component: DashboardHomeComponent},
     {path: '**', redirectTo: '', pathMatch: 'full'}
   ]}
 ];

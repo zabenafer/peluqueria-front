@@ -9,12 +9,12 @@
             <p></p>
             <mat-form-field class="ancho" appearance="fill">
               <mat-label>Correo Electronico</mat-label>
-              <input matInput autocomplete="off" formControlName="email">
+              <input matInput autocomplete="off" formControlName="email" [(ngModel)]="value1">
             </mat-form-field>
             <p></p>
             <mat-form-field class="ancho" appearance="fill">
               <mat-label>Contraseña</mat-label>
-              <input matInput autocomplete="off" formControlName="password" type="password">
+              <input matInput autocomplete="off" formControlName="password" type="password" [(ngModel)]="value2">
             </mat-form-field>
             <p></p>
             <button class="login ancho" type="submit" mat-raised-button mat-button color="primary" [disabled]="loginForm.invalid">Iniciar Sesion</button>

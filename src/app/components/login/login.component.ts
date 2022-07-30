@@ -15,6 +15,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   createForm: FormGroup;
   loading = false;
+  value1 = 'zabenaferfotos2@gmail.com';
+  value2 = 'zabenafer';
 
   constructor(private router: Router,
     private fb: FormBuilder) {
@@ -116,7 +118,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     setTimeout(() => {
       this.loading = false;
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/dashboard/dashboard-home']);
     }, 1500);
   }
 

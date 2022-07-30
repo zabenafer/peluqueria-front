@@ -18,15 +18,9 @@
           {{nav.name}}</a>
       </mat-nav-list>
     </mat-sidenav>
-
     <mat-sidenav-content>
-      <router-outlet></router-outlet>
+      <router-outlet>
+      </router-outlet>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-
-<div *ngIf="!shouldRun">Please open on Stackblitz to see result</div>
-
-<!-- Copyright 2022 Google LLC. All Rights Reserved.
-    Use of this source code is governed by an MIT-style license that
-    can be found in the LICENSE file at https://angular.io/license -->

@@ -1,0 +1,52 @@
+<mat-toolbar>
+  <span>{{nombreComponente}}</span>
+  <div class="example-spacer"></div>
+</mat-toolbar>
+<div>
+  <p></p>
+  <form (ngSubmit)="onCreate()">
+    <mat-grid-list cols="2">
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Nombre</mat-label>
+        <input matInput required="nombre" type="text" [(ngModel)]="producto.nombre" name="nombre" placeholder="Nombre" autocomplete="off" />
+      </mat-form-field>
+      <p></p>
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Precio</mat-label>
+        <input matInput type="number" [(ngModel)]="producto.precio" name="precio" placeholder="Precio" autocomplete="off"/>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Cantidad</mat-label>
+        <input matInput type="number" [(ngModel)]="producto.cantidad" name="cantidad" placeholder="Cantidad" autocomplete="off"/>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field class="ancho" appearance="legacy">
+        <mat-label>Descripcion</mat-label>
+        <input matInput type="text" [(ngModel)]="producto.descripcion" name="descripcion" placeholder="Descripcion" autocomplete="off"/>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field appearance="legacy" class="ancho">
+        <mat-label *ngIf="producto.categoria.nombre">{{producto.categoria.nombre}}</mat-label>
+        <mat-select required="categoria" id="categoria" name="categoria" placeholder="Seleccione una Categoria" [(ngModel)]="producto.categoria.id_categoria">
+          <mat-option *ngFor="let categoria of categorias" [value]="categoria.id_categoria">
+            {{categoria.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <p></p>
+      <mat-form-field appearance="legacy" class="ancho">
+        <mat-label *ngIf="producto.proveedor.nombre">{{producto.proveedor.nombre}}</mat-label>
+        <mat-select required="proveedor" id="proveedor" name="proveedor" placeholder="Seleccione un Proveedor" [(ngModel)]="producto.proveedor.id_proveedor">
+          <mat-option *ngFor="let proveedor of proveedores" [value]="proveedor.id_proveedor">
+            {{proveedor.nombre}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-list>
+    <div mat-dialog-actions [align]="'end'">
+      <button mat-raised-button color="warn" style="margin-left: 8px; height: 50px;" mat-dialog-close>Cerrar</button>
+      <button type="submit" style="margin-left: 8px; height: 50px;" mat-raised-button color="primary" >Guardar</button>
+    </div>
+  </form>
+</div>
