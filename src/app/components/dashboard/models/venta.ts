@@ -1,12 +1,12 @@
 import { Cliente } from "./cliente";
+import { DetalleVenta } from "./detalleVenta";
 
 export class Venta {
 
-  id_venta: number;
-  cod_venta: number;
-  monto_total: number;
-  descripcion: string;
-
+  //id_venta: number;
+  //cod_venta: number;
+  //monto_total: number;
+  //descripcion: string;
   cliente: Cliente = new Cliente;
-
+  detalleVenta: DetalleVenta[];
 }

@@ -8,6 +8,6 @@ export class DetalleVenta {
   precio: number;
 
   producto: Producto = new Producto;
-  venta: Venta = new Venta;
+  id_venta: number;
 
 }

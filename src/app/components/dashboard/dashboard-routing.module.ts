@@ -1,3 +1,4 @@
+import { NuevoModifVentaComponent } from './venta/nuevo-modif-venta.component';
 import { ListaClienteComponent } from './cliente/lista-cliente.component';
 import { DashboardComponent } from './dashboard.component';
 import { NgModule } from '@angular/core';
@@ -14,9 +15,10 @@ const routes: Routes = [
   {path: '', component: DashboardComponent, children: [
     { path: 'clientes', component: ListaClienteComponent },
     { path: 'tratamientos', component: ListaTratamientoComponent },
-    { path: 'turnos', component: ListaTurnosComponent },
+    { path: 'servicios', component: ListaTurnosComponent },
     { path: 'productos', component: ListaProductoComponent },
     { path: 'ventas', component: ListaVentaComponent },
+    { path: 'regventa', component: NuevoModifVentaComponent},
     { path: 'verhistorial/:id', component: HistorialTurnosComponent},
     { path: 'verdetalleventa/:id', component: DetalleVentaComponent},
     { path: 'dashboard-home', component: DashboardHomeComponent},

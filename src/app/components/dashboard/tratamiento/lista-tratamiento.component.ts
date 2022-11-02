@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TratamientoService } from '../service/tratamiento.service';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 @Component({
   selector: 'app-lista-tratamiento',
@@ -76,17 +77,22 @@ export class ListaTratamientoComponent implements OnInit {
     this.dialog.open(NuevoModifTratamientoComponent, dialogConfig);
   }
 
-  onDelete(id:number){
-    console.log(id);
-    this.tratamientoService.delete(id).subscribe(
-      data => {
-        this.toastr.success("Tratamiento eliminado con Exito!","OK", { timeOut: 3000 });
-        this.cargarTratamientos();
-      },
-      err => {
-        this.toastr.error(err.error.mensaje, 'Error al eliminar el Tratamiento', { timeOut: 3000 });
+  onDelete(id:number, tratamiento: Tratamiento){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '250px';
+    dialogConfig.data = tratamiento.nombre;
+    dialogConfig.id = "Tratamiento";
+    this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
+      if (result == true) {
+        console.log(result);
+        this.toastr.success('Tratamiento Eliminado con exito!', 'OK', { timeOut: 3000 });
+      } else {
+
+        console.log("no queria eliminar");
       }
-    )
+    });
   }
 
   applyFilter(event: Event) {

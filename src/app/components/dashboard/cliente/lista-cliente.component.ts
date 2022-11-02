@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { HistorialTurnosComponent } from '../turno/historial-turnos.component';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 @Component({
   selector: 'app-lista-cliente',
@@ -28,7 +29,7 @@ export class ListaClienteComponent implements OnInit {
      private toastr: ToastrService,
      private router: Router) { }
 
-  public displayedColumns: any[] = ['nombre', 'apellido', 'celular', 'email', 'localidad.nombre', 'localidad.provincia.nombre','historial', 'acciones'];
+  public displayedColumns: any[] = ['nombre', 'celular', 'email', 'localidad.nombre', 'localidad.provincia.nombre','historial', 'acciones'];
   public dataSource = new MatTableDataSource<Cliente>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -82,7 +83,26 @@ export class ListaClienteComponent implements OnInit {
     this.dialog.open(NuevoModifClienteComponent, dialogConfig);
   }
 
-  onDelete(id:number){
+  onDelete(id:number, cliente: Cliente){
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '250px';
+    dialogConfig.data = cliente.nombre +" "+ cliente.apellido;
+    dialogConfig.id = "Cliente";
+    this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
+      if (result == true) {
+        this.toastr.success('Cliente Eliminado con exito!', 'OK', { timeOut: 3000 });
+        console.log(result);
+      } else {
+        console.log("no queria eliminar");
+      }
+    });
+
+
+
+    /*
     console.log(id);
     this.clienteService.delete(id).subscribe(
       data => {
@@ -93,7 +113,9 @@ export class ListaClienteComponent implements OnInit {
         this.toastr.error(err.error.mensaje, 'Debe eliminar los turnos del Cliente primero', { timeOut: 3000 });
       }
     )
+    */
   }
+
 
   verHistorial(cliente: Cliente) {
     const dialogConfig = new MatDialogConfig();

@@ -1,1 +1,140 @@
-<p>nuevo-modif-venta works!</p>
+<div class="container">
+  <mat-toolbar class="mat-elevation-z4">
+    <span>Registrar Venta</span>
+  </mat-toolbar>
+
+  <mat-toolbar style="margin-top: 50px;" class="mat-elevation-z8">
+    <span style="margin-right: 50px;">Datos del Cliente</span>
+    <button mat-raised-button color="primary"> <mat-icon>add</mat-icon> Nuevo Cliente</button>
+  </mat-toolbar>
+
+  <form>
+    <mat-card>
+        <mat-grid-list cols="3" rowHeight="70px">
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field appearance="legacy" class="ancho">
+              <mat-label> Cliente </mat-label>
+              <mat-select  placeholder="Seleccione un Cliente" [(ngModel)]="venta.cliente" id="cliente" name="cliente" (selectionChange)="cargarDatosCliente($event)">
+                <mat-option *ngFor="let cliente of clientes" [value]="cliente.id_cliente">
+                  {{cliente.nombre}} {{cliente.apellido}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field class="ancho" appearance="legacy">
+              <mat-label>Celular</mat-label>
+              <input class="ancho" matInput [(ngModel)]="cliente.celular" type="number" name="celular" placeholder="Celular" autocomplete="off" disabled />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field class="ancho" appearance="legacy">
+              <mat-label>Email</mat-label>
+              <input matInput [(ngModel)]="cliente.email" type="email" name="email" placeholder="Email" autocomplete="off" disabled />
+            </mat-form-field>
+          </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card>
+  </form>
+
+  <mat-toolbar style="margin-top: 50px;" class="mat-elevation-z8">
+    <span style="margin-right: 50px;">Datos del Producto</span>
+  </mat-toolbar>
+
+  <form [formGroup]="detalleForm" (ngSubmit)="addDetalle()">
+    <mat-card>
+        <mat-grid-list cols="4" rowHeight="70px">
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field appearance="legacy" class="ancho">
+              <mat-label> Producto </mat-label>
+              <mat-select  placeholder="Seleccione un Producto" [(ngModel)]="producto.id_producto" formControlName="id_producto" id="producto" name="producto" (selectionChange)="cargarDatosProducto($event)">
+                <mat-option *ngFor="let producto of productos" [value]="producto.id_producto">
+                  {{producto.nombre}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field class="ancho" appearance="legacy" style="padding-right: 20px">
+              <mat-label>Cantidad</mat-label>
+              <input matInput type="number" [(ngModel)]="producto.cantidad" formControlName="cantidad" name="cantidad" placeholder="Cantidad" autocomplete="off"/>
+            </mat-form-field>
+            <mat-form-field class="ancho2" appearance="legacy">
+              <mat-label>En Stock</mat-label>
+              <input matInput type="number" [(ngModel)]="cantStock" formControlName="cantStock" name="cantStock" placeholder="Cantidad" autocomplete="off" readonly/>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-form-field class="ancho" appearance="legacy">
+              <mat-label>Precio</mat-label>
+              <input matInput type="number" [(ngModel)]="producto.precio" formControlName="precio" name="precio" placeholder="Precio" autocomplete="off"/>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <button type="submit" mat-raised-button color="primary" [disabled]="!detalleForm.valid" > <mat-icon>add</mat-icon> Agregar </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card>
+  </form>
+
+  <div>
+    <table mat-table [dataSource]="detalleVenta">
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+
+      <ng-container matColumnDef="nombreProducto">
+        <th mat-header-cell *matHeaderCellDef > Nombre </th>
+        <td mat-cell *matCellDef="let element"> {{element.nombreProducto}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="precio">
+        <th mat-header-cell *matHeaderCellDef > Precio </th>
+        <td mat-cell *matCellDef="let element"> {{element.precio | currency}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let element"> {{element.cantidad}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef> Eliminar </th>
+        <td mat-cell *matCellDef="let row" style="text-align: left;">
+          <button [disabled]="!detalleVenta.length" (click)="removeFila()" mat-icon-button color="warn" matTooltip="Eliminar el Producto">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+    </table>
+  </div>
+  <br/>
+  <div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" style="margin-left: 8px; height: 60px;" (click)="close()">Cerrar</button>
+    <button type="submit" style="margin-left: 8px; height: 60px;" mat-raised-button color="primary" [disabled]="!detalleVenta.length" (click)="addVenta()" >Guardar</button>
+  </div>
+</div>
+  <!--
+
+      <form [formGroup]="detalleForm" (ngSubmit)="addDetalle()">
+    <mat-form-field class="ancho" appearance="legacy">
+      <mat-label>Precio</mat-label>
+      <input matInput type="number" [(ngModel)]="venta.detalleVenta.cantidad" name="precio" placeholder="Precio" autocomplete="off"/>
+    </mat-form-field>
+    <p></p>
+    <button type="submit" [disabled]="!detalleForm.valid" mat-raised-button> + </button>
+  </form>
+  <p></p>
+  <h1>Detalle</h1>
+  <table style="width: 100%">
+    <tr>
+      <th>Cantidad</th>
+      <th>Precio</th>
+    </tr>
+    <tr *ngFor="let item of detalleVenta">
+      <td>{{item.cantidad}}</td>
+      <td>{{item.precio}}</td>
+    </tr>
+  </table>
+
+  -->
+

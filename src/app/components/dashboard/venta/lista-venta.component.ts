@@ -17,7 +17,7 @@ import { VentaService } from '../service/venta.service';
 export class ListaVentaComponent implements OnInit {
 
   data: Venta[] = [];
-  public displayedColumns: any[] = ['cod_venta', 'cliente.nombre', 'descripcion','monto_total','detalleVenta', 'acciones'];
+  public displayedColumns: any[] = ['cod_venta', 'cliente.nombre', 'monto_total','detalleVenta', 'acciones'];
   public dataSource = new MatTableDataSource<Venta>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -57,7 +57,7 @@ export class ListaVentaComponent implements OnInit {
     );
   }
 
-  onAdd(venta?: Venta) {
+  /* onAdd(venta?: Venta) {
     let product = (venta != null) ? venta: new Venta();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -65,7 +65,7 @@ export class ListaVentaComponent implements OnInit {
     dialogConfig.width = '40%';
     dialogConfig.data = product;
     this.dialog.open(NuevoModifVentaComponent, dialogConfig);
-  }
+  } */
 
   onEdit(venta: Venta) {
     const dialogConfig = new MatDialogConfig();

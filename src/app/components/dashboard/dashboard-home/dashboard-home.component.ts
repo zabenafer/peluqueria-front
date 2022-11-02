@@ -35,7 +35,7 @@ export class DashboardHomeComponent implements OnInit {
       description: 'LISTAR / AGREGAR/ MODIFICAR / ELIMINAR',
       buttonText: 'Button',
       img: '../../../../assets/calendario.png',
-      href: "dashboard/turnos"
+      href: "dashboard/servicios"
     }
     ,
     {
@@ -52,28 +52,6 @@ export class DashboardHomeComponent implements OnInit {
       buttonText: 'Button',
       img: '../../../../assets/person.png',
       href: "dashboard/ventas"
-    }
-    ,
-    {
-      title: 'PERFIL',
-      description: 'LISTAR / AGREGAR/ MODIFICAR / ELIMINAR',
-      buttonText: 'Button',
-      img: '../../../../assets/person.png'
-    }
-    ,
-    {
-      title: 'EJEMPLO',
-      description: 'LISTAR / AGREGAR/ MODIFICAR / ELIMINAR',
-      buttonText: 'Button',
-      img: '../../../../assets/person.png'
-    }
-    ,
-    {
-      title: 'EJEMPLO',
-      description: 'LISTAR / AGREGAR/ MODIFICAR / ELIMINAR',
-      buttonText: 'Button',
-      img: '../../../../assets/person.png',
-      href: "dashboard/clientes"
     }
   ];
 

@@ -20,6 +20,7 @@ import { DashboardHomeComponent } from './dashboard-home/dashboard-home.componen
 import { ListaVentaComponent } from './venta/lista-venta.component';
 import { NuevoModifVentaComponent } from './venta/nuevo-modif-venta.component';
 import { DetalleVentaComponent } from './venta/detalle-venta.component';
+import { EliminarComponent } from './eliminar/eliminar.component';
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { DetalleVentaComponent } from './venta/detalle-venta.component';
     DashboardHomeComponent,
     ListaVentaComponent,
     NuevoModifVentaComponent,
-    DetalleVentaComponent
+    DetalleVentaComponent,
+    EliminarComponent
 
   ],
   imports: [

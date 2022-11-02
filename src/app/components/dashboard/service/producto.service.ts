@@ -18,6 +18,10 @@ export class ProductoService {
     return this.httpClient.get<Producto[]>(this.productoUrl + 'all');
   }
 
+  public findProducto(id: number): Observable<Producto> {
+    return this.httpClient.get<Producto>(this.productoUrl + `find/${id}`);
+  }
+
   public add(producto: any): Observable<any> {
     return this.httpClient.post<any>(this.productoUrl + `add`, producto);
   }

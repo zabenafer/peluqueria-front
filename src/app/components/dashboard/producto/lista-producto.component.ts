@@ -17,7 +17,7 @@ import { ProductoService } from '../service/producto.service';
 export class ListaProductoComponent implements OnInit {
 
   data: Producto[] = [];
-  public displayedColumns: any[] = ['id_producto','nombre', 'precio', 'cantidad','categoria.nombre', 'proveedor.nombre', 'descripcion', 'acciones'];
+  public displayedColumns: any[] = ['id_producto','nombre', 'precio', 'cantidad','categoria.nombre', 'proveedor.nombre', 'acciones'];
   public dataSource = new MatTableDataSource<Producto>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

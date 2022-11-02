@@ -54,7 +54,7 @@ export class ListaTurnosComponent implements OnInit {
      private toastr: ToastrService,
      private router: Router) { }
 
-  public displayedColumns: any[] = ['fechaTurno','cliente.nombre', 'cliente.apellido', 'tratamiento.nombre', 'turno.descripcion', 'precio', 'acciones'];
+  public displayedColumns: any[] = ['fechaTurno','cliente.nombre', 'tratamiento.nombre', 'turno.descripcion', 'precio', 'acciones'];
   public dataSource = new MatTableDataSource<Turno>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;

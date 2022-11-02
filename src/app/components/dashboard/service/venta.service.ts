@@ -18,7 +18,8 @@ export class VentaService {
     return this.httpClient.get<Venta[]>(this.ventaUrl + 'all');
   }
 
-  public add(venta: any): Observable<any> {
+  public add(venta: Venta): Observable<any> {
+    console.log(venta);
     return this.httpClient.post<any>(this.ventaUrl + `add`, venta);
   }
 

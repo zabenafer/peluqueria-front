@@ -17,7 +17,7 @@ export class MenusidevarComponent implements OnDestroy {
     {name:'Home', route:'dashboard-home',icon:'home'},
     {name:'Clientes', route:'clientes',icon:'people'},
     {name:'Tratamientos', route:'tratamientos',icon:'list'},
-    {name:'Turnos', route:'turnos',icon:'edit_calendar'},
+    {name:'Servicios', route:'servicios',icon:'edit_calendar'},
     {name:'Productos', route:'productos',icon:'storage'},
     {name:'Ventas', route:'ventas',icon:'receipt_long'},
     {name:'Cerrar Sesion',icon:'logout'}

@@ -68,18 +68,6 @@ export class NuevoModifTurnoComponent implements OnInit {
   }
   idTratamiento(idTratamiento: any) {
     console.log(idTratamiento.value);
-    // this.localidadService.findLocalidadByProvincia(idProvincia.value).subscribe(
-    //   (resp) => {
-    //     this.localidades = resp;
-    //   },
-    //   (err) => {
-    //     this.toastr.error(
-    //       err.error.mensaje,
-    //       'Fail al buscar las localidades de la provincia',
-    //       { timeOut: 3000 }
-    //     );
-    //   }
-    // );
   }
 
   onCreate(): void {
@@ -92,7 +80,7 @@ export class NuevoModifTurnoComponent implements OnInit {
               timeOut: 3000,
             });
             this.dialogRef.close();
-            this.router.navigate(['/dashboard/turnos']);
+            this.router.navigate(['/dashboard/servicios']);
           });
         },
         (err) => {
