@@ -1,3 +1,4 @@
+import { ReporteComponent } from './reporte/reporte.component';
 import { NuevoModifVentaComponent } from './venta/nuevo-modif-venta.component';
 import { ListaClienteComponent } from './cliente/lista-cliente.component';
 import { DashboardComponent } from './dashboard.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
     { path: 'servicios', component: ListaTurnosComponent },
     { path: 'productos', component: ListaProductoComponent },
     { path: 'ventas', component: ListaVentaComponent },
+    { path: 'reportes', component: ReporteComponent },
     { path: 'regventa', component: NuevoModifVentaComponent},
     { path: 'verhistorial/:id', component: HistorialTurnosComponent},
     { path: 'verdetalleventa/:id', component: DetalleVentaComponent},

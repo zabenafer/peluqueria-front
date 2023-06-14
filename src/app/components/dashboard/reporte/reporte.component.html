@@ -1,0 +1,80 @@
+<div class="grid-container">
+  <h1 class="mat-h1">Dashboard</h1>
+  <mat-grid-list cols="2" rowHeight="350px">
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <mat-card class="dashboard-card mat-elevation-z6">
+        <mat-card-header>
+          <mat-card-title>Grafico Lineal - Cantidad de Servicios por Mes </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card mat-elevation-z6">
+        <mat-card-header>
+          <mat-card-title> Reporte 1 - Total Ingresos por Mes </mat-card-title>
+        </mat-card-header>
+        <mat-form-field appearance="fill">
+          <mat-label>Mes y Año</mat-label>
+          <input matInput [matDatepicker]="dp1"  [formControl]="dateR1">
+          <mat-datepicker-toggle matSuffix [for]="dp1"></mat-datepicker-toggle>
+          <mat-datepicker #dp1
+                          startView="year"
+                          (monthSelected)="setMonthAndYearR1($event, dp1)"
+                          panelClass="example-month-picker">
+          </mat-datepicker>
+        </mat-form-field>
+        <p> --- Precio: </p>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+      <mat-card class="dashboard-card mat-elevation-z6">
+        <mat-card-header>
+          <mat-card-title> Grafico de torta </mat-card-title>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="dashboard-card mat-elevation-z6">
+        <mat-card-header>
+          <mat-card-title> Reporte 2 - Cantidad de Servicios por Mes </mat-card-title>
+        </mat-card-header>
+        <mat-form-field appearance="fill">
+          <mat-label>Mes y Año</mat-label>
+          <input matInput [matDatepicker]="dp2"  [formControl]="dateR2">
+          <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+          <mat-datepicker #dp2
+                          startView="year"
+                          (monthSelected)="setMonthAndYearR2($event, dp2)"
+                          panelClass="example-month-picker">
+          </mat-datepicker>
+        </mat-form-field>
+        <p>Nombre Tratamiento: </p>
+        <p>Cantidad de Servicios: </p>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+
+   <!--  <mat-grid-tile *ngFor="let card of cards | async" [colspan]="card.cols" [rowspan]="card.rows">
+      <mat-card class="dashboard-card">
+        <mat-card-header>
+          <mat-card-title>
+            {{card.title}}
+            <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu" xPosition="before">
+              <button mat-menu-item>Expand</button>
+            </mat-menu>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="dashboard-card-content">
+          <div>Card Content Here</div>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>
+ -->

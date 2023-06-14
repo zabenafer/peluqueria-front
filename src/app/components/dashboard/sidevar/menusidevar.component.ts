@@ -20,6 +20,7 @@ export class MenusidevarComponent implements OnDestroy {
     {name:'Servicios', route:'servicios',icon:'edit_calendar'},
     {name:'Productos', route:'productos',icon:'storage'},
     {name:'Ventas', route:'ventas',icon:'receipt_long'},
+    {name:'Reportes', route:'reportes',icon:'receipt_long'},
     {name:'Cerrar Sesion',icon:'logout'}
   ]
 

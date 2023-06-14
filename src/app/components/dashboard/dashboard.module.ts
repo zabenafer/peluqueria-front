@@ -21,6 +21,14 @@ import { ListaVentaComponent } from './venta/lista-venta.component';
 import { NuevoModifVentaComponent } from './venta/nuevo-modif-venta.component';
 import { DetalleVentaComponent } from './venta/detalle-venta.component';
 import { EliminarComponent } from './eliminar/eliminar.component';
+import { ReporteComponent } from './reporte/reporte.component';
+import { DashboardreportesComponent } from './reporte/dashboardreportes/dashboardreportes.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
@@ -41,7 +49,9 @@ import { EliminarComponent } from './eliminar/eliminar.component';
     ListaVentaComponent,
     NuevoModifVentaComponent,
     DetalleVentaComponent,
-    EliminarComponent
+    EliminarComponent,
+    ReporteComponent,
+    DashboardreportesComponent
 
   ],
   imports: [
@@ -49,6 +59,12 @@ import { EliminarComponent } from './eliminar/eliminar.component';
     DashboardRoutingModule,
     SharedModule,
     FormsModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule,
   ],
   entryComponents:[NuevoModifClienteComponent],
 })
