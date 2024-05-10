@@ -10,6 +10,8 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ClienteService } from '../service/cliente.service';
 import { ProductoService } from '../service/producto.service';
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { NuevoModifClienteComponent } from '../cliente/nuevo-modif-cliente.component';
 
 @Component({
   selector: 'app-nuevo-modif-venta',
@@ -46,7 +48,8 @@ export class NuevoModifVentaComponent implements OnInit {
     public clienteService: ClienteService,
     public productoService: ProductoService,
     private toastr: ToastrService,
-    private router: Router) {
+    private router: Router,
+    private dialog: MatDialog) {
 
       this.detalleVenta = [];
 
@@ -82,6 +85,16 @@ export class NuevoModifVentaComponent implements OnInit {
         this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
       }
     )
+  }
+
+  onAdd(cliente?: Cliente) {
+    let client = (cliente != null) ? cliente: new Cliente();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = client;
+    this.dialog.open(NuevoModifClienteComponent, dialogConfig)
   }
 
   cargarDatosCliente(idCliente: any) {

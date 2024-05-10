@@ -3,21 +3,21 @@
   <div class="example-spacer"></div>
 </mat-toolbar>
 <div>
-  <form (ngSubmit)="onCreate()">
+  <form [formGroup]="form" (ngSubmit)="onCreate()">
     <mat-grid-list cols="2">
       <mat-form-field class="ancho" appearance="legacy">
         <mat-label>Nombre</mat-label>
-        <input matInput type="text" [(ngModel)]="tratamiento.nombre" name="nombre" placeholder="Nombre" autocomplete="off" />
+        <input matInput formControlName="nombre"  type="text" name="nombre" placeholder="Nombre" autocomplete="off" />
       </mat-form-field>
       <p></p>
       <mat-form-field class="ancho" appearance="legacy">
         <mat-label>Precio</mat-label>
-        <input matInput type="number" [(ngModel)]="tratamiento.precio" name="precio" placeholder="Precio" autocomplete="off"/>
+        <input matInput type="number" formControlName="precio" name="precio" placeholder="Precio" autocomplete="off"/>
       </mat-form-field>
       <p></p>
       <mat-form-field class="ancho" appearance="legacy">
         <mat-label>Descripcion</mat-label>
-        <input matInput type="text" [(ngModel)]="tratamiento.descripcion" name="descripcion" placeholder="Descripcion" autocomplete="off"/>
+        <input matInput type="text" formControlName="descripcion" name="descripcion" placeholder="Descripcion" autocomplete="off"/>
       </mat-form-field>
       <p></p>
     </mat-grid-list>

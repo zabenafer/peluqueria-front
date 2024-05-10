@@ -1,3 +1,4 @@
+import { EliminarComponent } from './../eliminar/eliminar.component';
 import { Venta } from './../models/venta';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -76,14 +77,26 @@ export class ListaVentaComponent implements OnInit {
     this.dialog.open(NuevoModifVentaComponent, dialogConfig);
   }
 
-  onDelete(id:number){
-    console.log(id);
-    this.ventaService.delete(id).subscribe(
-      data => {
-        this.toastr.success("Venta eliminado con Exito!","OK", { timeOut: 3000 });
-        this.cargarVentas();
+  onDelete(id:number, venta: Venta){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '250px';
+    dialogConfig.data ="de " + venta.cliente.nombre +" "+ venta.cliente.apellido;
+    dialogConfig.id = "Venta";
+    this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
+      if (result == true) {
+        console.log(id);
+        this.ventaService.delete(id).subscribe(
+          data => {
+            console.log(result);
+            this.toastr.success('Venta Eliminada con exito!', 'OK', { timeOut: 3000 });
+            this.cargarVentas();
+          })
+      } else {
+        console.log("no queria eliminar");
       }
-    )
+    });
   }
 
   applyFilter(event: Event) {

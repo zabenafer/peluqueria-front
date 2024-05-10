@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -24,14 +24,17 @@ export class NuevoModifTratamientoComponent implements OnInit {
     private dialogRef: MatDialogRef<NuevoModifTratamientoComponent>,
     public formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: Tratamiento
-  ) { }
+  ) {
+    this.form = this.formBuilder.group({
+      id_tratamiento: [''],
+      nombre:['', [Validators.required]],
+      precio:['', [Validators.required]],
+      descripcion:['', [Validators.required]]
+    })
+   }
 
   ngOnInit(): void {
-    this.tratamiento = new Tratamiento();
-    this.tratamiento.id_tratamiento = this.data.id_tratamiento;
-    this.tratamiento.nombre = this.data.nombre;
-    this.tratamiento.precio = this.data.precio;
-    this.tratamiento.descripcion = this.data.descripcion;
+    this.form.patchValue(this.data);
 
     if (this.data.id_tratamiento >= 0) {
       this.nombreComponente = "Modificar Tratamiento"
@@ -40,38 +43,46 @@ export class NuevoModifTratamientoComponent implements OnInit {
     }
   }
   onCreate(): void {
-    console.log(this.tratamiento);
-
-    if (this.tratamiento != null && this.tratamiento.id_tratamiento > 0) {
-      this.tratamientoService.update(this.tratamiento).subscribe(
-        () => {
-          return this.tratamientoService.lista().subscribe((data) => {
-            this.tratamientoService.tratamientoActualizar.next(data);
-            this.toastr.success('Tratamiento Modificado con exito!', 'OK', {
-              timeOut: 3000,
-            });
-            this.dialogRef.close();
-          });
-        },
-        (err) => {
-          this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
-        }
-      );
+    console.log(this.data);
+    if (this.form.invalid) {
+      return Object.values(this.form.controls).forEach(control => {
+        control.markAllAsTouched();
+      })
     } else {
-      this.tratamientoService.add(this.tratamiento).subscribe(
-        () => {
-          this.tratamientoService.lista().subscribe((data) => {
-            this.tratamientoService.tratamientoActualizar.next(data);
-            this.toastr.success('Tratamiento Creado con exito!', 'OK', {
-              timeOut: 3000,
+      console.log("ENTRO FORM VALIDO");
+      if (this.data != null && this.data.id_tratamiento > 0) {
+        console.log("POR HACER EL UPDATE");
+        console.log(this.form.value);
+        this.tratamientoService.update(this.form.value).subscribe(
+          () => {
+            return this.tratamientoService.lista().subscribe((data) => {
+              this.tratamientoService.tratamientoActualizar.next(data);
+              this.toastr.success('Tratamiento Modificado con exito!', 'OK', {
+                timeOut: 3000,
+              });
+              this.dialogRef.close();
             });
-            this.dialogRef.close();
-          });
-        },
-        (err) => {
-          this.toastr.error(err.error.mensaje, 'Fail', { timeOut: 3000 });
-        }
-      );
+          },
+          (err) => {
+            this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
+          }
+        );
+      } else {
+        this.tratamientoService.add(this.form.value).subscribe(
+          () => {
+            this.tratamientoService.lista().subscribe((data) => {
+              this.tratamientoService.tratamientoActualizar.next(data);
+              this.toastr.success('Tratamiento Creado con exito!', 'OK', {
+                timeOut: 3000,
+              });
+              this.dialogRef.close();
+            });
+          },
+          (err) => {
+            this.toastr.error(err.error.mensaje, 'Fail', { timeOut: 3000 });
+          }
+        );
+      }
     }
   }
 

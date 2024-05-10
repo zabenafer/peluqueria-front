@@ -1,3 +1,4 @@
+import { EliminarComponent } from './../eliminar/eliminar.component';
 import { NuevoModifTurnoComponent } from './nuevo-modif-turno.component';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
@@ -108,17 +109,26 @@ export class ListaTurnosComponent implements OnInit {
     this.dialog.open(NuevoModifTurnoComponent, dialogConfig);
   }
 
-  onDelete(id:number){
-    console.log(id);
-    this.turnoService.delete(id).subscribe(
-      data => {
-        this.toastr.success("Turno eliminado con Exito!","OK", { timeOut: 3000 });
-        this.cargarTurnos();
-      },
-      err => {
-        this.toastr.error(err.error.mensaje, 'Error al eliminar el Turno', { timeOut: 3000 });
+  onDelete(id:number, turno: Turno){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '250px';
+    dialogConfig.data ="de " + turno.cliente.nombre +" "+ turno.cliente.apellido +" - Fecha "+ turno.fecha_turno;
+    dialogConfig.id = "Turno";
+    this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
+      if (result == true) {
+        console.log(id);
+        this.turnoService.delete(id).subscribe(
+          data => {
+            console.log(result);
+            this.toastr.success('Turno Eliminado con exito!', 'OK', { timeOut: 3000 });
+            this.cargarTurnos();
+          })
+      } else {
+        console.log("no queria eliminar");
       }
-    )
+    });
   }
 
   applyFilter(event: Event) {

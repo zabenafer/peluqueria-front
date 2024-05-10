@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { Producto } from '../models/producto';
 import { ProductoService } from '../service/producto.service';
+import { EliminarComponent } from '../eliminar/eliminar.component';
 
 @Component({
   selector: 'app-lista-producto',
@@ -76,14 +77,26 @@ export class ListaProductoComponent implements OnInit {
     this.dialog.open(NuevoModifProductoComponent, dialogConfig);
   }
 
-  onDelete(id:number){
-    console.log(id);
-    this.productoService.delete(id).subscribe(
-      data => {
-        this.toastr.success("Producto eliminado con Exito!","OK", { timeOut: 3000 });
-        this.cargarProductos();
+  onDelete(id:number, producto: Producto){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '250px';
+    dialogConfig.data = producto.nombre;
+    dialogConfig.id = "Tratamiento";
+    this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
+      if (result == true) {
+        console.log(id);
+        this.productoService.delete(id).subscribe(
+          data => {
+            console.log(result);
+            this.toastr.success('Producto Eliminado con exito!', 'OK', { timeOut: 3000 });
+            this.cargarProductos();
+          })
+      } else {
+        console.log("no queria eliminar");
       }
-    )
+    });
   }
 
   applyFilter(event: Event) {

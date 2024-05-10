@@ -114,6 +114,7 @@ export class NuevoModifClienteComponent implements OnInit {
         }
       );
     } else {
+      if(this.cliente.nombre != null && this.cliente.apellido != null) {
       this.clienteService.add(this.cliente).subscribe(
         () => {
           this.clienteService.lista().subscribe((data) => {
@@ -121,7 +122,7 @@ export class NuevoModifClienteComponent implements OnInit {
             this.toastr.success('Cliente Creado con exito!', 'OK', {
               timeOut: 3000,
             });
-            this.router.navigate(['/dashboard/clientes']);
+            //this.router.navigate(['/dashboard/clientes']);
             this.dialogRef.close();
           });
         },
@@ -129,6 +130,7 @@ export class NuevoModifClienteComponent implements OnInit {
           this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
         }
       );
+      } else { this.toastr.info('Faltan campos por completar!') }
     }
   }
 

@@ -68,7 +68,7 @@ export class ListaTratamientoComponent implements OnInit {
     this.dialog.open(NuevoModifTratamientoComponent, dialogConfig);
   }
 
-  onEdit(tratamiento: Tratamiento) {
+  onEdit(tratamiento: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -86,10 +86,14 @@ export class ListaTratamientoComponent implements OnInit {
     dialogConfig.id = "Tratamiento";
     this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
       if (result == true) {
-        console.log(result);
-        this.toastr.success('Tratamiento Eliminado con exito!', 'OK', { timeOut: 3000 });
+        console.log(id);
+        this.tratamientoService.delete(id).subscribe(
+          data => {
+            console.log(result);
+            this.toastr.success('Tratamiento Eliminado con exito!', 'OK', { timeOut: 3000 });
+            this.cargarTratamientos();
+          })
       } else {
-
         console.log("no queria eliminar");
       }
     });

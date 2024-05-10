@@ -93,8 +93,12 @@ export class ListaClienteComponent implements OnInit {
     dialogConfig.id = "Cliente";
     this.dialog.open(EliminarComponent, dialogConfig).afterClosed().subscribe(result => {
       if (result == true) {
-        this.toastr.success('Cliente Eliminado con exito!', 'OK', { timeOut: 3000 });
-        console.log(result);
+        this.clienteService.delete(id).subscribe(
+          data => {
+            this.toastr.success('Cliente Eliminado con exito!', 'OK', { timeOut: 3000 });
+            console.log(result);
+            this.cargarClientes();
+          })
       } else {
         console.log("no queria eliminar");
       }

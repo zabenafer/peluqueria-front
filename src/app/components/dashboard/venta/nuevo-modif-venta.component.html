@@ -5,7 +5,7 @@
 
   <mat-toolbar style="margin-top: 50px;" class="mat-elevation-z8">
     <span style="margin-right: 50px;">Datos del Cliente</span>
-    <button mat-raised-button color="primary"> <mat-icon>add</mat-icon> Nuevo Cliente</button>
+    <button mat-raised-button color="primary" (click)="onAdd()" > <mat-icon>add</mat-icon> Nuevo Cliente</button>
   </mat-toolbar>
 
   <form>
@@ -109,7 +109,7 @@
   </div>
   <br/>
   <div mat-dialog-actions [align]="'end'">
-    <button mat-raised-button color="warn" style="margin-left: 8px; height: 60px;" (click)="close()">Cerrar</button>
+    <button mat-raised-button color="warn" style="margin-left: 8px; height: 60px;" mat-dialog-close (click)="close()">Cerrar</button>
     <button type="submit" style="margin-left: 8px; height: 60px;" mat-raised-button color="primary" [disabled]="!detalleVenta.length" (click)="addVenta()" >Guardar</button>
   </div>
 </div>

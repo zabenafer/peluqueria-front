@@ -59,3 +59,12 @@ th {
   font-size: 14px;
   width: 20%;
 }
+
+.mat-column-fechaTurno {
+  max-width: 200px;
+}
+
+
+.mat-column-precio {
+  max-width: 10px;
+}

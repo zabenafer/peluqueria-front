@@ -50,7 +50,7 @@
             <button mat-icon-button matTooltip="Modificar el Producto" (click)="onEdit(row)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button color="warn" matTooltip="Eliminar el Producto" (click)="onDelete(row.id_cliente)">
+            <button mat-icon-button color="warn" matTooltip="Eliminar el Producto" (click)="onDelete(row.id_producto,row)">
               <mat-icon>delete_outline</mat-icon>
             </button>
           </td>
@@ -60,5 +60,5 @@
     </div>
   </div>
 
-  <h2 *ngIf="data.length !< 0">No hay Clientes para mostrar</h2>
+  <h2 *ngIf="data.length !< 0">No hay Productos para mostrar</h2>
 </div>
