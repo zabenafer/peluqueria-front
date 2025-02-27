@@ -7,39 +7,57 @@ import {
   HTTP_INTERCEPTORS,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, from } from 'rxjs';
 import { AuthService } from '../dashboard/service/auth.service';
 import { environment } from 'src/environments/environment';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchMap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class ApiRestInterceptor implements HttpInterceptor {
-
-  //Va a comprobar si hay algun token en el localStorage, si hay lo añade a la cabecera del request.
+  private isRefreshing = false;
 
   constructor(
     private authService: AuthService,
     private toastr: ToastrService
   ) {}
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return from(this.authService.getToken()).pipe(
+      switchMap((token) => {
+        if (token) {
+          request = request.clone({
+            headers: request.headers.set(environment.AUTHORIZATION, environment.BEARER + token)
+          });
+        }
 
-    let intReq = request;
-
-    const token = this.authService.getToken();
-    if (token != null) {
-      intReq = request.clone({ headers: request.headers.set(environment.AUTHORIZATION, environment.BEARER + token) })
-    }
-    return next.handle(intReq).pipe(catchError((err: HttpErrorResponse) => {
-      if (err.status === 401) {
-        this.toastr.error("Se termino el tiempo de la sesion", 'Sesion Expirada', { timeOut: 5000 });
-        this.authService.logOut();
-      }
-      return throwError(err);
-    }));
+        return next.handle(request).pipe(
+          catchError((err: HttpErrorResponse) => {
+            if (err.status === 401 && !this.isRefreshing) {
+              this.isRefreshing = true;
+              return this.authService.refreshToken().pipe(
+                switchMap((newToken) => {
+                  this.isRefreshing = false;
+                  request = request.clone({
+                    headers: request.headers.set(environment.AUTHORIZATION, environment.BEARER + newToken)
+                  });
+                  return next.handle(request);
+                }),
+                catchError(refreshErr => {
+                  this.isRefreshing = false;
+                  this.toastr.error("Se terminó el tiempo de la sesión", 'Sesión Expirada', { timeOut: 5000 });
+                  this.authService.logOut();
+                  return throwError(refreshErr);
+                })
+              );
+            } else {
+              return throwError(err);
+            }
+          })
+        );
+      })
+    );
   }
-
 }
 
-export const interceptorSpringProvider = [{provide: HTTP_INTERCEPTORS, useClass: ApiRestInterceptor, multi: true}]
+export const interceptorSpringProvider = [{ provide: HTTP_INTERCEPTORS, useClass: ApiRestInterceptor, multi: true }];

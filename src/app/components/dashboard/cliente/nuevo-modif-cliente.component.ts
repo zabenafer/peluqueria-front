@@ -1,15 +1,10 @@
-import { Cliente } from '../models/cliente';
+import { Cliente } from './../models/cliente';
 import { ClienteService } from '../service/cliente.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import { LocalidadService } from '../service/localidad.service';
 import { ProvinciaService } from '../service/provincia.service';
 import { Provincia } from '../models/provincia';
@@ -22,7 +17,7 @@ import { Localidad } from '../models/localidad';
 })
 export class NuevoModifClienteComponent implements OnInit {
   cliente: Cliente;
-  form!: FormGroup;
+  form: FormGroup;
   localidades: Localidad[];
   provincias: Provincia[];
   idProvincia: any;
@@ -39,10 +34,19 @@ export class NuevoModifClienteComponent implements OnInit {
     private dialogRef: MatDialogRef<NuevoModifClienteComponent>,
     public formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: Cliente
-  ) {}
-
-  ngOnInit(): void {
-    this.cliente = new Cliente();
+  ) {
+    this.form = this.formBuilder.group({
+      id_cliente: [''],
+      nombre:['', [Validators.required]],
+      apellido:['', [Validators.required]],
+      celular:['', [Validators.required]],
+      email:['', [Validators.required, Validators.email]],
+      localidad:['', [Validators.required]],
+      provincia:['' || null, [Validators.required]]
+    });
+  }
+/**
+ *    this.cliente = new Cliente();
     this.cliente.id_cliente = this.data.id_cliente;
     this.cliente.nombre = this.data.nombre;
     this.cliente.apellido = this.data.apellido;
@@ -50,18 +54,22 @@ export class NuevoModifClienteComponent implements OnInit {
     this.cliente.email = this.data.email;
     this.cliente.localidad.id_localidad = this.data.localidad.id_localidad;
     this.cliente.localidad.provincia = this.data.localidad.provincia;
+ *
+ *
+ */
+ngOnInit(): void {
+    this.form.patchValue(this.data);
 
     if (this.data.id_cliente >= 0) {
       this.nombreComponente = "Modificar Cliente"
     } else {
       this.nombreComponente = "Agregar Cliente"
     }
-
     this.provinciaService.lista().subscribe(
       (resp) => {
         this.provincias = resp;
-        if (this.cliente.localidad.provincia.id_provincia > 0) {
-          this.localidadService.findLocalidadByProvincia(this.cliente.localidad.provincia.id_provincia).subscribe( (dataLocal) => {
+        if (this.data.localidad.provincia.id_provincia > 0) {
+          this.localidadService.findLocalidadByProvincia(this.data.localidad.provincia.id_provincia).subscribe( (dataLocal) => {
             this.localidades = dataLocal;
           })
         }
@@ -81,7 +89,7 @@ export class NuevoModifClienteComponent implements OnInit {
   }
 
   cargarLocalidadPorProvinciaId(idProvincia: any) {
-    this.cliente.localidad.nombre = '';
+    this.data.localidad.nombre = '';
     this.localidadService.findLocalidadByProvincia(idProvincia.value).subscribe(
       (resp) => {
         this.localidades = resp;
@@ -96,41 +104,43 @@ export class NuevoModifClienteComponent implements OnInit {
     );
   }
   onCreate(): void {
-
-    if (this.cliente != null && this.cliente.id_cliente > 0) {
-      this.clienteService.update(this.cliente).subscribe(
-        () => {
-          return this.clienteService.lista().subscribe((data) => {
-            this.clienteService.clienteActualizar.next(data);
-            this.toastr.success('Cliente modificado con exito!', 'OK', {
-              timeOut: 3000,
-            });
-            this.router.navigate(['/dashboard/clientes']);
-            this.dialogRef.close();
-          });
-        },
-        (err) => {
-          this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
-        }
-      );
+    if (this.form.invalid) {
+      return Object.values(this.form.controls).forEach(control => {
+        control.markAllAsTouched();
+      })
     } else {
-      if(this.cliente.nombre != null && this.cliente.apellido != null) {
-      this.clienteService.add(this.cliente).subscribe(
-        () => {
-          this.clienteService.lista().subscribe((data) => {
-            this.clienteService.clienteActualizar.next(data);
-            this.toastr.success('Cliente Creado con exito!', 'OK', {
-              timeOut: 3000,
+      if (this.data != null && this.data.id_cliente > 0) {
+        this.clienteService.update(this.form.value).subscribe(
+          () => {
+            return this.clienteService.lista().subscribe((data) => {
+              this.clienteService.clienteActualizar.next(data);
+              this.toastr.success('Cliente modificado con exito!', 'OK', {
+                timeOut: 3000,
+              });
+              this.router.navigate(['/dashboard/clientes']);
+              this.dialogRef.close();
             });
-            //this.router.navigate(['/dashboard/clientes']);
-            this.dialogRef.close();
-          });
-        },
-        (err) => {
-          this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
-        }
-      );
-      } else { this.toastr.info('Faltan campos por completar!') }
+          },
+          (err) => {
+            this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
+          }
+        );
+      } else {
+        this.clienteService.add(this.form.value).subscribe(
+          () => {
+            this.clienteService.lista().subscribe((data) => {
+              this.clienteService.clienteActualizar.next(data);
+              this.toastr.success('Cliente Creado con exito!', 'OK', {
+                timeOut: 3000,
+              });
+              this.dialogRef.close();
+            });
+          },
+          (err) => {
+            this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
+          }
+        );
+      }
     }
   }
 

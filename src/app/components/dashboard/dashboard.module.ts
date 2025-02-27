@@ -30,7 +30,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 
-
 @NgModule({
   declarations: [
     DashboardComponent,
