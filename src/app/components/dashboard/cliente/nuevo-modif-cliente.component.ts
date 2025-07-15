@@ -1,6 +1,6 @@
 import { Cliente } from './../models/cliente';
 import { ClienteService } from '../service/cliente.service';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -15,15 +15,19 @@ import { Localidad } from '../models/localidad';
   templateUrl: './nuevo-modif-cliente.component.html',
   styleUrls: ['./nuevo-modif-cliente.component.css'],
 })
-export class NuevoModifClienteComponent implements OnInit {
+export class NuevoModifClienteComponent implements OnInit, OnDestroy {
   cliente: Cliente;
   form: FormGroup;
   localidades: Localidad[];
   provincias: Provincia[];
-  idProvincia: any;
   nombreComponente: String;
-
+  provinciaFiltradas: Provincia[] = [];
+  localidadesFiltradas: Localidad[] = [];
+  filtroProvincia = new FormControl('');
+  filtroLocalidad = new FormControl('');
   email = new FormControl('', [Validators.required, Validators.email]);
+
+  private filtroLocalidadSub: any;
 
   constructor(
     public clienteService: ClienteService,
@@ -33,45 +37,62 @@ export class NuevoModifClienteComponent implements OnInit {
     private router: Router,
     private dialogRef: MatDialogRef<NuevoModifClienteComponent>,
     public formBuilder: FormBuilder,
-    @Inject(MAT_DIALOG_DATA) public data: Cliente
-  ) {
+    @Inject(MAT_DIALOG_DATA) public data: Cliente) {
     this.form = this.formBuilder.group({
       id_cliente: [''],
       nombre:['', [Validators.required]],
       apellido:['', [Validators.required]],
-      celular:['', [Validators.required]],
-      email:['', [Validators.required, Validators.email]],
+      celular:['', []],
+      email:['', []],//Validators.required, Validators.email
       localidad:['', [Validators.required]],
-      provincia:['' || null, [Validators.required]]
+      provincia:[null, [Validators.required]]
     });
   }
-/**
- *    this.cliente = new Cliente();
-    this.cliente.id_cliente = this.data.id_cliente;
-    this.cliente.nombre = this.data.nombre;
-    this.cliente.apellido = this.data.apellido;
-    this.cliente.celular = this.data.celular;
-    this.cliente.email = this.data.email;
-    this.cliente.localidad.id_localidad = this.data.localidad.id_localidad;
-    this.cliente.localidad.provincia = this.data.localidad.provincia;
- *
- *
- */
+  
 ngOnInit(): void {
-    this.form.patchValue(this.data);
+    this.form.patchValue({
+      id_cliente: this.data.id_cliente,
+      nombre: this.data.nombre,
+      apellido: this.data.apellido,
+      celular: this.data.celular,
+      email: this.data.email
+    });
+    this.filtroProvincia.setValue(this.data.localidad.provincia.nombre);
 
-    if (this.data.id_cliente >= 0) {
-      this.nombreComponente = "Modificar Cliente"
-    } else {
-      this.nombreComponente = "Agregar Cliente"
-    }
+    this.nombreComponente = this.data.id_cliente >= 0 ? 'Modificar Cliente' : 'Agregar Cliente';
     this.provinciaService.lista().subscribe(
       (resp) => {
         this.provincias = resp;
-        if (this.data.localidad.provincia.id_provincia > 0) {
-          this.localidadService.findLocalidadByProvincia(this.data.localidad.provincia.id_provincia).subscribe( (dataLocal) => {
+        this.provinciaFiltradas = resp;
+
+        // Filtrado dinámico
+        this.filtroProvincia.valueChanges.subscribe((valor: string) => {
+          const filtro = valor?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") || '';
+          this.provinciaFiltradas = this.provincias.filter(prov =>
+            prov.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filtro)
+          );
+        });
+
+        const idProvincia = this.data.localidad?.provincia?.id_provincia;
+        if (idProvincia > 0) {
+          this.localidadService.findLocalidadByProvincia(idProvincia).subscribe((dataLocal) => {
             this.localidades = dataLocal;
-          })
+
+            this.filtroLocalidad.valueChanges.subscribe((valor: string) => {
+              const filtro = valor?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") || '';
+              this.localidadesFiltradas = this.localidades.filter(loc =>
+                loc.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filtro)
+              );
+            });
+
+            // ✅ Ahora que provincias y localidades están cargadas, podés setear todo el formulario
+            this.form.patchValue({
+              provincia: idProvincia,
+              localidad: this.localidades.find(l => l.id_localidad === this.data.localidad.id_localidad)
+            });
+            // ✅ Mostramos la localidad en el input de búsqueda
+            this.filtroLocalidad.setValue(this.data.localidad.nombre);
+          });
         }
       },
       (err) => {
@@ -80,19 +101,34 @@ ngOnInit(): void {
     );
   }
 
+  ngOnDestroy(): void {
+    if (this.filtroLocalidadSub) this.filtroLocalidadSub.unsubscribe();
+  }
+
   getErrorMessage() {
     if (this.email.hasError('required')) {
       return 'Ingrese un email valido';
     }
-
     return this.email.hasError('email') ? 'Email Invalido' : '';
   }
 
   cargarLocalidadPorProvinciaId(idProvincia: any) {
-    this.data.localidad.nombre = '';
     this.localidadService.findLocalidadByProvincia(idProvincia.value).subscribe(
       (resp) => {
         this.localidades = resp;
+        this.localidadesFiltradas = resp;
+        this.filtroLocalidad.setValue('');
+
+        // 👇 Cancelamos suscripción anterior si la hubiera
+        if (this.filtroLocalidadSub) this.filtroLocalidadSub.unsubscribe();
+
+        // ✅ Nueva suscripción
+        this.filtroLocalidadSub = this.filtroLocalidad.valueChanges.subscribe((valor: string) => {
+          const filtro = valor?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") || '';
+          this.localidadesFiltradas = this.localidades.filter(loc =>
+            loc.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(filtro)
+          );
+        });
       },
       (err) => {
         this.toastr.error(
@@ -103,45 +139,29 @@ ngOnInit(): void {
       }
     );
   }
+
   onCreate(): void {
     if (this.form.invalid) {
-      return Object.values(this.form.controls).forEach(control => {
-        control.markAllAsTouched();
-      })
-    } else {
-      if (this.data != null && this.data.id_cliente > 0) {
-        this.clienteService.update(this.form.value).subscribe(
-          () => {
-            return this.clienteService.lista().subscribe((data) => {
-              this.clienteService.clienteActualizar.next(data);
-              this.toastr.success('Cliente modificado con exito!', 'OK', {
-                timeOut: 3000,
-              });
-              this.router.navigate(['/dashboard/clientes']);
-              this.dialogRef.close();
-            });
-          },
-          (err) => {
-            this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
-          }
-        );
-      } else {
-        this.clienteService.add(this.form.value).subscribe(
-          () => {
-            this.clienteService.lista().subscribe((data) => {
-              this.clienteService.clienteActualizar.next(data);
-              this.toastr.success('Cliente Creado con exito!', 'OK', {
-                timeOut: 3000,
-              });
-              this.dialogRef.close();
-            });
-          },
-          (err) => {
-            this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
-          }
-        );
-      }
+      Object.values(this.form.controls).forEach(control => control.markAllAsTouched());
+      return;
     }
+
+    const action = this.data?.id_cliente > 0
+      ? this.clienteService.update(this.form.value)
+      : this.clienteService.add(this.form.value);
+
+    action.subscribe(
+      () => {
+        this.clienteService.lista().subscribe((data) => {
+          this.clienteService.clienteActualizar.next(data);
+          this.toastr.success(`Cliente ${this.data.id_cliente > 0 ? 'modificado' : 'creado'} con éxito`, 'OK', { timeOut: 3000 });
+          this.dialogRef.close();
+        });
+      },
+      (err) => {
+        this.toastr.error(err.error.mensaje, 'Error', { timeOut: 3000 });
+      }
+    );
   }
 
   onClear() {
@@ -150,5 +170,38 @@ ngOnInit(): void {
 
   onClose() {
     this.dialogRef.close();
+  }
+
+  onProvinciaOpened(opened: boolean, inputElement: HTMLInputElement) {
+    if (opened) {
+      setTimeout(() => inputElement.focus());
+    }
+  }
+  onLocalidadOpened(opened: boolean, inputElement: HTMLInputElement) {
+    if (opened) {
+      setTimeout(() => inputElement.focus());
+    }
+  } 
+
+  onProvinciaSeleccionada(nombreProvincia: string) {
+    const provinciaSeleccionada = this.provincias.find(p =>
+      p.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") ===
+      nombreProvincia.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    );
+
+    if (provinciaSeleccionada) {
+      this.form.patchValue({ provincia: provinciaSeleccionada.id_provincia });
+      this.cargarLocalidadPorProvinciaId({ value: provinciaSeleccionada.id_provincia });
+    }
+  }
+  onLocalidadSeleccionada(nombreLocalidad: string) {
+    const localidadSeleccionada = this.localidades.find(l =>
+      l.nombre.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") ===
+      nombreLocalidad.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    );
+
+    if (localidadSeleccionada) {
+      this.form.patchValue({ localidad: localidadSeleccionada });
+    }
   }
 }

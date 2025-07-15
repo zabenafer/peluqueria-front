@@ -4,33 +4,36 @@
 </mat-toolbar>
 <div>
   <p></p>
-  <form (ngSubmit)="onCreate()">
+  <form [formGroup]="form" (ngSubmit)="onCreate()">
     <mat-grid-list cols="2">
       <mat-form-field class="ancho" appearance="legacy">
         <mat-label>Elegir una fecha</mat-label>
-        <input matInput [matDatepicker]="picker" [(ngModel)]="turno.fecha_turno" [value]="turno.fecha_turno" name="fecha_turno" placeholder="Fecha" autocomplete="off">
+        <input matInput [matDatepicker]="picker" formControlName="fecha_turno" name="fecha_turno" id="fecha_turno" placeholder="Seleccione una Fecha" autocomplete="off">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <p></p>
       <mat-form-field class="ancho" appearance="legacy">
         <mat-label>Precio</mat-label>
-        <input matInput type="number" [(ngModel)]="turno.precio" name="precio" placeholder="Precio" autocomplete="off"/>
+        <input matInput type="number" formControlName="precio" name="precio" id="precio" placeholder="Precio" autocomplete="off"/>
       </mat-form-field>
       <p></p>
       <mat-form-field appearance="legacy" class="ancho">
-        <mat-label *ngIf="turno.tratamiento.nombre">{{turno.tratamiento.nombre}}</mat-label>
-        <mat-select [(ngModel)]="turno.tratamiento" placeholder="Seleccione un Tratamiento" id="tratamiento" name="tratamiento">
-          <mat-option *ngFor="let tratamiento of tratamientos" [value]="tratamiento">
+        <mat-label>Tratamiento</mat-label>
+        <mat-select formControlName="tratamiento" name="tratamiento" id="tratamiento" placeholder="Seleccione un Tratamiento">
+          <mat-option *ngFor="let tratamiento of tratamientos" [value]="tratamiento.id_tratamiento">
             {{tratamiento.nombre}}
           </mat-option>
         </mat-select>
       </mat-form-field>
       <p></p>
       <mat-form-field appearance="legacy" class="ancho">
-        <mat-label *ngIf="turno.cliente.nombre"> {{turno.cliente.nombre}} {{turno.cliente.apellido}}</mat-label>
-        <mat-select [(ngModel)]="turno.cliente" placeholder="Seleccione un Cliente" id="cliente" name="cliente">
-          <mat-option *ngFor="let cliente of clientes" [value]="cliente">
+        <mat-label>Cliente</mat-label>
+        <mat-select formControlName="cliente" name="cliente" id="cliente" placeholder="Seleccione un Cliente" (openedChange)="onClienteOpened($event, inputCliente)" panelClass="select-panel-with-filter">
+          <mat-option>
+            <input #inputCliente type="text" placeholder="Buscar clientes..." [formControl]="filtroCliente" matInput class="input-search" autocomplete="off" (click)="$event.stopPropagation()"/>
+          </mat-option>
+          <mat-option *ngFor="let cliente of clienteFiltrados" [value]="cliente.id_cliente">
             {{cliente.nombre}} {{cliente.apellido}}
           </mat-option>
         </mat-select>
@@ -38,7 +41,7 @@
       <p></p>
       <mat-form-field appearance="legacy" class="ancho">
         <mat-label >Descripcion</mat-label>
-        <textarea matInput [(ngModel)]="turno.descripcion" placeholder="Escriba una descripcion" id="descripcion" name="descripcion"></textarea>
+        <textarea matInput type="text" formControlName="descripcion" name="descripcion" placeholder="Descripcion" autocomplete="off"></textarea>
       </mat-form-field>
     </mat-grid-list>
     <div mat-dialog-actions [align]="'end'">

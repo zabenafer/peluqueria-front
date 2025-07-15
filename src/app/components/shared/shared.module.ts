@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-//Modulos
-import { ReactiveFormsModule } from '@angular/forms';
-
-//External Angular Material
-
+// Angular Material
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -26,13 +23,19 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
-import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    // Material
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
@@ -40,7 +43,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTableModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
     MatGridListModule,
@@ -54,10 +56,16 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatMomentDateModule,
     MatProgressSpinnerModule,
     MatRippleModule,
+    MatAutocompleteModule,
+    MatMenuModule,
+    MatFormFieldModule,
     FlexLayoutModule
   ],
   exports: [
     CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    // Material
     MatSidenavModule,
     MatListModule,
     MatToolbarModule,
@@ -65,7 +73,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTableModule,
     MatInputModule,
     MatSelectModule,
-    ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
     MatGridListModule,
@@ -79,6 +86,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatMomentDateModule,
     MatProgressSpinnerModule,
     MatRippleModule,
+    MatAutocompleteModule,
+    MatMenuModule,
+    MatFormFieldModule,
     FlexLayoutModule
   ]
 })

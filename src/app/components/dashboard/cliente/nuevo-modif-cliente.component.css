@@ -5,3 +5,8 @@
  .toolbar {
   margin-bottom: 30px;
  }
+.select-panel-with-filter .input-search {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}

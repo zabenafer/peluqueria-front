@@ -29,20 +29,22 @@
       <p></p>
       <mat-form-field appearance="legacy" class="ancho">
         <mat-label>Provincia</mat-label>
-        <mat-select formControlName="provincia" name="provincia" id="provincia" placeholder="Seleccione una Provincia" (selectionChange)="cargarLocalidadPorProvinciaId($event)">
-          <mat-option *ngFor="let provincia of provincias" [value]="provincia.id_provincia">
-            {{provincia.nombre}}
+        <input type="text" matInput placeholder="Buscar provincia..." [formControl]="filtroProvincia" [matAutocomplete]="autoProvincia" autocomplete="off">
+        <mat-autocomplete #autoProvincia="matAutocomplete" (optionSelected)="onProvinciaSeleccionada($event.option.value)">
+          <mat-option *ngFor="let prov of provinciaFiltradas" [value]="prov.nombre">
+            {{ prov.nombre }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
       <p></p>
       <mat-form-field appearance="legacy" class="ancho">
         <mat-label>Localidad</mat-label>
-        <mat-select formControlName="localidad" name="localidad" id="localidad" placeholder="Seleccione una Localidad">
-          <mat-option *ngFor="let localidad of localidades" [value]="localidad">
-            {{localidad.nombre}}
+        <input type="text" matInput placeholder="Buscar localidad..." [formControl]="filtroLocalidad" [matAutocomplete]="autoLocalidad" autocomplete="off">
+        <mat-autocomplete #autoLocalidad="matAutocomplete" (optionSelected)="onLocalidadSeleccionada($event.option.value)">
+          <mat-option *ngFor="let loc of localidadesFiltradas" [value]="loc.nombre">
+            {{ loc.nombre }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
     </mat-grid-list>
     <div mat-dialog-actions [align]="'end'">

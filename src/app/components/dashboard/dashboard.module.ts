@@ -24,11 +24,12 @@ import { EliminarComponent } from './eliminar/eliminar.component';
 import { ReporteComponent } from './reporte/reporte.component';
 import { DashboardreportesComponent } from './reporte/dashboardreportes/dashboardreportes.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatCardModule } from '@angular/material/card';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -57,13 +58,6 @@ import { LayoutModule } from '@angular/cdk/layout';
     CommonModule,
     DashboardRoutingModule,
     SharedModule,
-    FormsModule,
-    MatGridListModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    LayoutModule,
   ],
   entryComponents:[NuevoModifClienteComponent],
 })
