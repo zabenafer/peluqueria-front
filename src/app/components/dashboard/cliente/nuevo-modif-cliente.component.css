@@ -1,12 +1,90 @@
-.ancho
- {
-   width: 85%;
- }
- .toolbar {
-  margin-bottom: 30px;
- }
-.select-panel-with-filter .input-search {
+/* Espaciado y tamaño de los campos */
+mat-form-field.ancho {
   width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+  margin-bottom: 16px;
+}
+
+/* Alineación del grid y espaciado */
+mat-grid-list {
+  width: 100%;
+  gap: 16px;
+}
+
+/* Botones */
+button[mat-raised-button] {
+  min-width: 100px;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  transition: all 0.2s ease-in-out;
+}
+
+button[mat-raised-button]:hover {
+  filter: brightness(1.1);
+  transform: scale(1.02);
+}
+
+/* Ajustes de campos autocomplete */
+input.input-search {
+  width: 100%;
+  padding: 4px 8px;
+  border: none;
+  outline: none;
+}
+
+/* Separador superior en la parte del formulario */
+mat-toolbar.toolbar {
+  background-color: #85aed8;
+  color: #000000;
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 24px;
+}
+
+/* Espaciador para centrar el título */
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+/* Estilo al foco en inputs */
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: rgba(0,0,0,0.12);
+}
+
+.mat-form-field-appearance-legacy.mat-focused .mat-form-field-underline {
+  background-color: #1976d2;
+}
+
+/* Autocomplete panel estilo */
+.mat-autocomplete-panel {
+  border: 1px solid #ccc;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Botonera del diálogo */
+button[mat-raised-button] {
+  min-width: 100px;
+  height: 48px;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: normal;
+  border-radius: 4px;
+  margin-left: 12px;
+  box-shadow: none;
+  transform: none;
+  filter: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.2s ease;
+}
+
+/* Efecto hover respetando colores de Angular Material */
+button[mat-raised-button][color="primary"]:hover {
+  background-color: #1976d2; /* mismo azul de Angular Material */
+  color: white;
+}
+
+button[mat-raised-button][color="warn"]:hover {
+  background-color: #d32f2f; /* rojo de Material */
+  color: white;
 }

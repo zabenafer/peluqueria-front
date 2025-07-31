@@ -25,7 +25,6 @@ export class NuevoModifClienteComponent implements OnInit, OnDestroy {
   localidadesFiltradas: Localidad[] = [];
   filtroProvincia = new FormControl('');
   filtroLocalidad = new FormControl('');
-  email = new FormControl('', [Validators.required, Validators.email]);
 
   private filtroLocalidadSub: any;
 
@@ -106,10 +105,9 @@ ngOnInit(): void {
   }
 
   getErrorMessage() {
-    if (this.email.hasError('required')) {
-      return 'Ingrese un email valido';
-    }
-    return this.email.hasError('email') ? 'Email Invalido' : '';
+    const emailControl = this.form.get('email');
+    if (emailControl?.hasError('required')) return 'Ingrese un email válido';
+    return emailControl?.hasError('email') ? 'Email inválido' : '';
   }
 
   cargarLocalidadPorProvinciaId(idProvincia: any) {
